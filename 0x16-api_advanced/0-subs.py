@@ -1,15 +1,17 @@
 #!/usr/bin/python3
-''' Queries given API '''
+''' task 0 module'''
 
 import requests
+import sys
 
 
 def number_of_subscribers(subreddit):
-    '''' Returns number of subscribers for a given subreddit '''
-    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
-    headers = {'User-Agent': 'ubuntu/20.04'}
-    response = requests.get(url, headers=headers, allow_redirects=False)
+    '''gets num of subs of a subreddit'''
+    headers = {'User-agent': 'test'}
+    subs = requests.get('https://www.reddit.com/r/{}/about.json'.format(
+        sys.argv[1]), allow_redirects=False, headers=headers)
 
-    if response.status_code == 404:
-        return (0)
-    return (response.json().get('data').get('subscribers'))
+    if subs.status_code == 200:
+        return (subs.json()['data']['subscribers'])
+    else:
+        return 0
